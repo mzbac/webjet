@@ -12,7 +12,7 @@ export const cinemas = [
 export const moviesListEndpoint = '/movies';
 export const movieDetailEndpoint = '/movie/';
 export const accessToken = 'sjd1HfkjU83ksdsm3802k';
-export const requestDelay = 1000;
-export const requestTimeOut = 1000;
-export const globalTimeout = 20000;
+export const requestDelay = 50;// retry request delay 50ms
+export const requestTimeOut = 300;// proxy request time out 300ms
+export const globalTimeout = 15000;// total response timeout 15s
 
