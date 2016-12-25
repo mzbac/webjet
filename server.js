@@ -1,5 +1,5 @@
 require('babel-core/register')({
-  presets: ['es2015-node5', 'stage-3'],
+  presets: ['es2015-node5', 'stage-0'],
 });
 
 const path = require('path');

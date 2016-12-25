@@ -28,7 +28,11 @@ const successRetrieveMoviesCallback = (allData) => {
       json: true,
     };
 
-    reqs.push(Rx.Observable.defer(() => rp(options))
+    reqs.push(Rx.Observable.defer(
+      () => {
+        return rp(options)
+          .then((res) => ({ ...res, cinema }));
+      })
       .timeout(requestTimeOut)
       .retryWhen((errors) => {
         console.log(`fetch movie details-${options.uri} fails`);// eslint-disable-line no-console
