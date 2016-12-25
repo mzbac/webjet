@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Input, Button, Loader } from 'semantic-ui-react';
+import { Input, Button, Loader, Message } from 'semantic-ui-react';
 import 'whatwg-fetch';
 import MovieList from './MovieList';
 import { getCheapestMoviesAction, searchMovieAction } from './actions';
@@ -15,18 +15,24 @@ const App = props => {
     movieSearchingText,
     movies,
     movieLoadingState,
+    fetchMovieError,
   } = props;
 
   return (
     <div className={styles.container} >
       <Button
         primary
+        disabled={movieLoadingState}
         className={styles.getMoviesBtn}
         onClick={getCheapestMovies}
       >
         Get Cheapest Movies
       </Button>
       <Input placeholder="Search on title..." onChange={searchMovie} className={styles.searchInput} />
+      {fetchMovieError && <Message negative >
+        <Message.Header>We&apos;re sorry we can&apos;t fetch movies data!</Message.Header>
+        <p>{fetchMovieError}</p>
+      </Message>}
       {movieLoadingState ?
         <Loader
           size="large"
@@ -45,12 +51,14 @@ App.propTypes = {
   movieSearchingText: PropTypes.string,
   movies: PropTypes.array.isRequired,
   movieLoadingState: PropTypes.bool.isRequired,
+  fetchMovieError: PropTypes.string,
 };
 const mapStateToProps = (state) => {
   return {
     movies: state.movies,
     movieSearchingText: state.movieSearchingText,
     movieLoadingState: state.loadingState,
+    fetchMovieError: state.fetchMovieError,
   };
 };
 export default connect(mapStateToProps, {

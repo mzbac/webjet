@@ -37,3 +37,14 @@ export const loadingState = (state = false, action) => {
       return state;
   }
 };
+
+export const fetchMovieError = (state = '', action) => {
+  switch (action.type) {
+    case GETCHEAPESTMOVIESSTART:
+      return '';
+    case GETCHEAPESTMOVIESFAIL:
+      return `Error : ${action.payload.message}`;
+    default:
+      return state;
+  }
+};
