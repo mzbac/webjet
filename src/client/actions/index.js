@@ -5,8 +5,8 @@ import {
 } from './movies';
 
 export {
-  getCheapestMovies,
-  searchMovie,
+  getCheapestMoviesAction,
+  searchMovieAction,
 } from './movies';
 
 export const rootEpic = combineEpics(

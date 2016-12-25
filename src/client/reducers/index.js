@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
 import {
   movies,
-  searchedMovie,
+  movieSearchingText,
+  loadingState,
 } from './movies';
 
 const rootReducer = combineReducers({
   movies,
-  searchedMovie,
+  movieSearchingText,
+  loadingState,
 });
 
 export default rootReducer;

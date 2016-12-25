@@ -14,6 +14,7 @@
   "rules": {
     "arrow-parens": 0,
     "no-plusplus": 0,
+    "new-cap": 0,
     "no-use-before-define": 0,
     "arrow-body-style": 0,
     "no-underscore-dangle": 0,
@@ -27,12 +28,6 @@
       2,
       {
         "args": "none"
-      }
-    ],
-    "new-cap": [
-      "error",
-      {
-        "properties": false
       }
     ]
   }

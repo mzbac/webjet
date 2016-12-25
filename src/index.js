@@ -2,7 +2,7 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import { render } from 'react-dom';
 import 'rxjs';
-import App from './client';
+import App from './client/App';
 import store from './client/configureStore';
 
 render(
