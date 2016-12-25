@@ -29,6 +29,9 @@
     "javascript"
   ],
   "dependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.6.5",
+    "babel-register": "^6.18.0",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "immutable": "^3.8.1",
