@@ -13,7 +13,7 @@
     "build": "NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack.prod.config.js --progress --colors",
     "coverage": "jest --coverage",
     "test-ci": "jest",
-    "lint": "eslint .",
+    "lint": "eslint . --fix",
     "start": "NODE_ENV=production node app.js",
     "start-dev": "NODE_ENV=development node app.js"
   },
