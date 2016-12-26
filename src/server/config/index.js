@@ -17,3 +17,5 @@ export const requestTimeOut = 1000;// proxy request time out 1s
 export const globalTimeout = 30000;// total response timeout 30s
 export const enableMovieDetailsCache = true;
 export const movieDetailsCacheTimeout = 60000;// timeout 60s
+export const enableMovieListCache = true;
+export const movieListCacheTimeout = 60000;// timeout 60s

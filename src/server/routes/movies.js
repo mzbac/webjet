@@ -1,5 +1,6 @@
 import rp from 'request-promise-native';
 import Rx from 'rxjs';
+import cache from 'memory-cache';
 import {
   apiUrl,
   cinemas,
@@ -8,6 +9,8 @@ import {
   requestDelay,
   requestTimeOut,
   globalTimeout,
+  enableMovieListCache,
+  movieListCacheTimeout,
 } from '../config';
 import movieDetailsObservableMapper from './movies/movieDetailsObservableMapper';
 
@@ -22,13 +25,27 @@ const movies = (req, res) => {
       },
       json: true,
     };
-    reqs.push(Rx.Observable.defer(() => rp(options))
-      .timeout(requestTimeOut)
-      .retryWhen((errors) => {
-        console.log(`fetch movie list-${options.uri} fails`);// eslint-disable-line no-console
-        return errors.delay(requestDelay);
-      })
-    );
+    const cachedMovieList = cache.get(options.uri);
+    if (enableMovieListCache && cachedMovieList) {
+      console.log(`return cached cachedMovieList : ${options.uri}`);// eslint-disable-line no-console
+      reqs.push(Rx.Observable.of(cachedMovieList));
+    } else {
+      reqs.push(Rx.Observable.defer(
+        () => rp(options)
+          .then(
+            (movieList) => {
+              cache.put(options.uri, movieList, movieListCacheTimeout);
+              return movieList;
+            }
+          ))
+        .timeout(requestTimeOut)
+        .retryWhen((errors) => {
+          console.log(`fetch movie list-${options.uri} fails`);// eslint-disable-line no-console
+          return errors.delay(requestDelay);
+        })
+      );
+    }
+
   }
   const moviesSource = Rx.Observable.forkJoin(reqs);
   const movieDetailsSource = moviesSource
