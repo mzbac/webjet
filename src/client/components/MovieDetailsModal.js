@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Button, Header, Image, Modal, Icon } from 'semantic-ui-react'
+import { Button, Header, Image, Modal, Icon } from 'semantic-ui-react';
 import styles from './MovieDetailsModal.css';
 
 class MovieDetailsModal extends Component {
