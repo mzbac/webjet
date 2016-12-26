@@ -8,7 +8,7 @@ const cssnext = require('postcss-cssnext');
 module.exports = {
   devtool: 'source-map',
   entry: [
-    './src/index',
+    './src/client/index',
   ],
 
   output: {
