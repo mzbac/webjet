@@ -32,7 +32,7 @@ Below are some of the critical folders of the project along with a comment descr
 - Cache control is configured by server side configuration, there is no cache control flag on request's parameter. (For security concerns, if the application acts as internal api proxy server we may can introduce cache control flag on request's parameter)
 - Application has to return the movies even test API server failed to return the movie data. (It needs to perform re-try request when it received error from test API server. It can't simply catch error and send error back to client)
 - Application should only re-try request in certain amount of time. It shouldn't keep retrying forever if test API server didn't respond correctly.
-
+- Same movie from two different cinemas has same ID number.(These movies which only have differences on prefix of ID, for example 'cw0076759' and 'fw0076759' shall be treated as the same because they have the same ID number '0076759').
 #Npm Scripts
 Install dependencies
 ```
