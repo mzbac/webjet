@@ -6,7 +6,7 @@ import {
   movieItemDefaultRatingDivider,
   defaultPosterUrl,
 } from '../config';
-
+import MovieDetailsModal from './MovieDetailsModal';
 
 class MovieItem extends Component {
   constructor(props) {
@@ -65,6 +65,10 @@ class MovieItem extends Component {
               disabled
               defaultRating={_.toNumber(rating) / movieItemDefaultRatingDivider}
               maxRating={movieItemMaxRating}
+            />
+            <MovieDetailsModal
+              movie={movie}
+              postImage={postImage}
             />
           </Item.Description>
         </Item.Content>
