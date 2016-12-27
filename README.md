@@ -3,10 +3,10 @@
 #Introduction
 
 This application is written by javascript/ES2015.
-The backend is built on top of Express. By JS's async naturel, it needs to perform multiple asynchronous API calls and one relay on another. Additionaly, our test API server is very flakey. Those added a lof of complexities of API request logics on error, re-try, timeout handling. I reckon Rxjs's simpler async and data flow would fit these requirements well so I used Rxjs to handle those async API requests.
+The backend is built on top of Express. It needs to perform multiple asynchronous API calls and one relay on another. Additionally, our test API server is very unstable. Those added a lof of complexities of API request logics on error, re-try, timeout handling. I reckon Rxjs's simpler async and data flow would fit these requirements well so I used Rxjs to handle those async API requests.
 
-The frontend is built on react,redux,redux-observable. I might have over engineered it. It just provids a simple button to fetch movies and display cheapest movies on screen. I just put Rxjs here to demostrate its usage. I have also written filtering cheapest movies logic on frontend code by follewing consideration:
-- In regards to calability, currently it only displays cheapest, it may needs to dispaly most expensive movies or particular cinema's movies later on. If frontend has already had full date of movies, we just need to chagne frontend code.
+The frontend is built on react,redux,redux-observable. I might have over engineered it. It just provides a simple button to fetch movies and display cheapest movies on screen. I just put Rxjs here to demonstrate its usage. I have also written filtering cheapest movies logic on frontend code by following consideration:
+- In regards to scalability, currently it only displays cheapest, it may needs to display most expensive movies or particular cinema's movies later on. If frontend has already had full date of movies, we just need to change frontend code.
 
 - In regards to save server's resources, let frontend code to do as much work as they can. 
 
