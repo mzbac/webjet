@@ -35,6 +35,14 @@ Below are some of the critical folders of the project along with a comment descr
 - Application should only re-try request in certain amount of time. It shouldn't keep retrying forever if test API server didn't respond correctly.
 - Same movie from two different cinemas has same ID number.(These movies which only have differences on prefix of ID, for example 'cw0076759' and 'fw0076759' shall be treated as the same because they have the same ID number '0076759').
 
+#Server work flow 
+
+When '/moives' endponit request comes in, server will start to fetch movie list from test api server. If any error occurs or timeout setting is reached, it will keep on re-trying until the globel timeout setting is exceeded. If the movie list has been fetched sucessfully, it will fetch the movies' details according to the movie list from test api server. It has the same error handling logic as described above. Then the result will be retured to client. Additionally, if the cache setting is turned on, the cache will be used if it's sufficient before fetching movie list or details. 
+
+#Client work flow
+
+When user clicks 'get cheapest movies' button, client will start to fetch movies from server and display loading spinner on the screen. Once movies data comes back from server, client will preform fitler logic to get cheapest movies from full moives list then display the cheapest moives on screen. Additionally, user can search movies by typing keywords of movie's title on search box.
+
 #Npm Scripts
 Install dependencies
 ```
