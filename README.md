@@ -8,7 +8,7 @@ The backend is built on top of Express. It needs to perform multiple asynchronou
 The frontend is built on react,redux,redux-observable. I might have over engineered it. It just provides a simple button to fetch movies and display cheapest movies on screen. I just put Rxjs here to demonstrate its usage. I have also written filtering cheapest movies logic on frontend code by following consideration:
 - In regards to scalability, currently it only displays cheapest, it may needs to display most expensive movies or particular cinema's movies later on. If frontend has already had full date of movies, we just need to change frontend code.
 
-- In regards to save server's resources, let frontend code to do as much work as they can. 
+- In regards to save server's resources, let frontend to do as much work as they can. 
 
 ## Folder Structure
 
