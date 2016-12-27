@@ -4,7 +4,7 @@
 
 This application is written by javascript/ES2015.
 
-The backend is built on top of Express. It needs to perform multiple asynchronous API calls and one relay on another. Additionally, our test API server is very unstable. Those added a lof of complexities of API request logics on error, re-try, timeout handling. I reckon Rxjs's simpler async and data flow would fit these requirements well so I used Rxjs to handle those async API requests.
+The backend is built on top of Express, acts as a proxy server performming multiple asynchronous API calls to test API server and these API calls are one relay on another. Additionally, the test API server is very unstable. Those facts added a lof of complexities of API request logics on error, re-try, timeout handling. I reckon Rxjs's simpler async and data flow would fit these requirements well so I used Rxjs to handle those async API requests.
 
 The frontend is built on react,redux,redux-observable. I might have over engineered it. It just provides a simple button to fetch movies and display cheapest movies on screen. I just put Rxjs here to demonstrate its usage. I have also written filtering cheapest movies logic on frontend code by following consideration:
 - In regards to scalability, currently it only displays cheapest, it may needs to display most expensive movies or particular cinema's movies later on. If frontend has already had full date of movies, we just need to change frontend code.
