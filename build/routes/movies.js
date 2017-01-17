@@ -1,59 +1,59 @@
-'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+Object.defineProperty(exports, '__esModule', {
+  value: true,
 });
 
-var _requestPromiseNative = require('request-promise-native');
+const _requestPromiseNative = require('request-promise-native');
 
-var _requestPromiseNative2 = _interopRequireDefault(_requestPromiseNative);
+const _requestPromiseNative2 = _interopRequireDefault(_requestPromiseNative);
 
-var _rxjs = require('rxjs');
+const _rxjs = require('rxjs');
 
-var _rxjs2 = _interopRequireDefault(_rxjs);
+const _rxjs2 = _interopRequireDefault(_rxjs);
 
-var _memoryCache = require('memory-cache');
+const _memoryCache = require('memory-cache');
 
-var _memoryCache2 = _interopRequireDefault(_memoryCache);
+const _memoryCache2 = _interopRequireDefault(_memoryCache);
 
-var _config = require('../config');
+const _config = require('../config');
 
-var _movieDetailsObservableMapper = require('./movies/movieDetailsObservableMapper');
+const _movieDetailsObservableMapper = require('./movies/movieDetailsObservableMapper');
 
-var _movieDetailsObservableMapper2 = _interopRequireDefault(_movieDetailsObservableMapper);
+const _movieDetailsObservableMapper2 = _interopRequireDefault(_movieDetailsObservableMapper);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var movies = function movies(req, res) {
-  var reqs = [];
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
+const movies = function movies(req, res) {
+  const reqs = [];
+  let _iteratorNormalCompletion = true;
+  let _didIteratorError = false;
+  let _iteratorError;
 
   try {
-    var _loop = function _loop() {
-      var cinema = _step.value;
-      var name = cinema.name;
+    const _loop = function _loop() {
+      const cinema = _step.value;
+      const name = cinema.name;
 
-      var options = {
-        uri: '' + _config.apiUrl + name + _config.moviesListEndpoint,
+      const options = {
+        uri: `${_config.apiUrl}${name}${_config.moviesListEndpoint}`,
         headers: {
-          'x-access-token': _config.accessToken
+          'x-access-token': _config.accessToken,
         },
-        json: true
+        json: true,
       };
-      var cachedMovieList = _memoryCache2.default.get(options.uri);
+      const cachedMovieList = _memoryCache2.default.get(options.uri);
       if (_config.enableMovieListCache && cachedMovieList) {
-        console.log('return cached cachedMovieList : ' + options.uri); // eslint-disable-line no-console
+        console.log(`return cached cachedMovieList : ${options.uri}`); // eslint-disable-line no-console
         reqs.push(_rxjs2.default.Observable.of(cachedMovieList));
       } else {
-        reqs.push(_rxjs2.default.Observable.defer(function () {
-          return (0, _requestPromiseNative2.default)(options).then(function (movieList) {
+        reqs.push(_rxjs2.default.Observable.defer(() => {
+          return (0, _requestPromiseNative2.default)(options).then((movieList) => {
             _memoryCache2.default.put(options.uri, movieList, _config.movieListCacheTimeout);
             return movieList;
           });
-        }).timeout(_config.requestTimeOut).retryWhen(function (errors) {
-          console.log('fetch movie list-' + options.uri + ' fails'); // eslint-disable-line no-console
+        }).timeout(_config.requestTimeOut).retryWhen((errors) => {
+          console.log(`fetch movie list-${options.uri} fails`); // eslint-disable-line no-console
           return errors.delay(_config.requestDelay);
         }));
       }
@@ -77,17 +77,17 @@ var movies = function movies(req, res) {
     }
   }
 
-  var moviesSource = _rxjs2.default.Observable.forkJoin(reqs);
-  var movieDetailsSource = moviesSource.map(_movieDetailsObservableMapper2.default).mergeAll().timeout(_config.globalTimeout);
-  var subscribe = movieDetailsSource.subscribe( // eslint-disable-line no-unused-vars
-  function (result) {
+  const moviesSource = _rxjs2.default.Observable.forkJoin(reqs);
+  const movieDetailsSource = moviesSource.map(_movieDetailsObservableMapper2.default).mergeAll().timeout(_config.globalTimeout);
+  const subscribe = movieDetailsSource.subscribe( // eslint-disable-line no-unused-vars
+  (result) => {
     res.json(result);
-  }, function (err) {
-    console.log('fetch movie list error: ' + err); // eslint-disable-line no-console
+  }, (err) => {
+    console.log(`fetch movie list error: ${err}`); // eslint-disable-line no-console
     res.json({ error: err });
-  }, function () {
+  }, () => {
     console.log('fetch movie list complete!'); // eslint-disable-line no-console
   });
 };
 exports.default = movies;
-//# sourceMappingURL=movies.js.map
+// # sourceMappingURL=movies.js.map

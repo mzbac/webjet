@@ -1,69 +1,69 @@
-'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+Object.defineProperty(exports, '__esModule', {
+  value: true,
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+const _extends = Object.assign || function (target) { for (let i = 1; i < arguments.length; i++) { const source = arguments[i]; for (const key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _requestPromiseNative = require('request-promise-native');
+const _requestPromiseNative = require('request-promise-native');
 
-var _requestPromiseNative2 = _interopRequireDefault(_requestPromiseNative);
+const _requestPromiseNative2 = _interopRequireDefault(_requestPromiseNative);
 
-var _rxjs = require('rxjs');
+const _rxjs = require('rxjs');
 
-var _rxjs2 = _interopRequireDefault(_rxjs);
+const _rxjs2 = _interopRequireDefault(_rxjs);
 
-var _memoryCache = require('memory-cache');
+const _memoryCache = require('memory-cache');
 
-var _memoryCache2 = _interopRequireDefault(_memoryCache);
+const _memoryCache2 = _interopRequireDefault(_memoryCache);
 
-var _config = require('../../config');
+const _config = require('../../config');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-var successRetrieveMoviesCallback = function successRetrieveMoviesCallback(allData) {
-  var movies = allData.reduce(function (accum, curr, index) {
-    var Movies = curr.Movies;
+const successRetrieveMoviesCallback = function successRetrieveMoviesCallback(allData) {
+  const movies = allData.reduce((accum, curr, index) => {
+    const Movies = curr.Movies;
 
-    var mappedMovies = Movies.map(function (movie) {
+    const mappedMovies = Movies.map((movie) => {
       return _extends({}, movie, { cinema: _config.cinemas[index] });
     });
     return [].concat(_toConsumableArray(accum), _toConsumableArray(mappedMovies));
   }, []);
-  var reqs = [];
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
+  const reqs = [];
+  let _iteratorNormalCompletion = true;
+  let _didIteratorError = false;
+  let _iteratorError;
 
   try {
-    var _loop = function _loop() {
-      var movie = _step.value;
-      var ID = movie.ID,
-          cinema = movie.cinema;
+    const _loop = function _loop() {
+      const movie = _step.value;
+      let ID = movie.ID,
+        cinema = movie.cinema;
 
-      var options = {
-        uri: '' + _config.apiUrl + cinema.name + _config.movieDetailEndpoint + ID,
+      const options = {
+        uri: `${_config.apiUrl}${cinema.name}${_config.movieDetailEndpoint}${ID}`,
         headers: {
-          'x-access-token': _config.accessToken
+          'x-access-token': _config.accessToken,
         },
-        json: true
+        json: true,
       };
-      var cachedMovieDetails = _memoryCache2.default.get(options.uri);
+      const cachedMovieDetails = _memoryCache2.default.get(options.uri);
       if (_config.enableMovieDetailsCache && cachedMovieDetails) {
-        console.log('return cached movie : ' + cachedMovieDetails.ID); // eslint-disable-line no-console
+        console.log(`return cached movie : ${cachedMovieDetails.ID}`); // eslint-disable-line no-console
         reqs.push(_rxjs2.default.Observable.of(cachedMovieDetails));
       } else {
-        reqs.push(_rxjs2.default.Observable.defer(function () {
-          return (0, _requestPromiseNative2.default)(options).then(function (res) {
-            var movieDetails = _extends({}, res, { cinema: cinema });
+        reqs.push(_rxjs2.default.Observable.defer(() => {
+          return (0, _requestPromiseNative2.default)(options).then((res) => {
+            const movieDetails = _extends({}, res, { cinema });
             _memoryCache2.default.put(options.uri, movieDetails, _config.movieDetailsCacheTimeout);
             return movieDetails;
           });
-        }).timeout(_config.requestTimeOut).retryWhen(function (errors) {
-          console.log('fetch movie details-' + options.uri + ' fails'); // eslint-disable-line no-console
+        }).timeout(_config.requestTimeOut).retryWhen((errors) => {
+          console.log(`fetch movie details-${options.uri} fails`); // eslint-disable-line no-console
           return errors.delay(_config.requestDelay);
         }));
       }
@@ -91,4 +91,4 @@ var successRetrieveMoviesCallback = function successRetrieveMoviesCallback(allDa
 };
 
 exports.default = successRetrieveMoviesCallback;
-//# sourceMappingURL=movieDetailsObservableMapper.js.map
+// # sourceMappingURL=movieDetailsObservableMapper.js.map
