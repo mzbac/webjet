@@ -10,7 +10,8 @@
     "npm": ">=3.0.0"
   },
   "scripts": {
-    "build": "NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack.prod.config.js --progress --colors",
+    "build": "npm run clean && NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack.prod.config.js --progress --colors && ./node_modules/.bin/babel ./src/server -d build -s",
+    "clean": "./node_modules/.bin/rimraf public && ./node_modules/.bin/rimraf build",
     "coverage": "jest --coverage",
     "test-ci": "jest",
     "lint": "eslint . --fix",
@@ -88,6 +89,7 @@
     "postcss-cssnext": "^2.9.0",
     "postcss-import": "^8.2.0",
     "postcss-loader": "^0.13.0",
+    "rimraf": "^2.5.4",
     "sass-loader": "^3.2.3",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.6",

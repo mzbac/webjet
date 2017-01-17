@@ -1,11 +1,19 @@
-require('babel-register')({
-  presets: ['es2015-node5', 'stage-0'],
-});
-
+if (process.env.NODE_ENV !== 'production') {
+  require('babel-register')({// eslint-disable-line global-require
+    presets: ['es2015-node5', 'stage-0'],
+  });
+}
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
-const { routes } = require('./src/server/index.js');
+
+let routes;
+if (process.env.NODE_ENV === 'production') {
+  routes = require('./build/index.js').routes;// eslint-disable-line global-require
+} else {
+  routes = require('./src/server/index.js').routes;// eslint-disable-line global-require
+}
+
 
 module.exports = {
   app() {
